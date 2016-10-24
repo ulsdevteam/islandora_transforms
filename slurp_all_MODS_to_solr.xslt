@@ -5,6 +5,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:foxml="info:fedora/fedora-system:def/foxml#"
   xmlns:mods="http://www.loc.gov/mods/v3"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
      exclude-result-prefixes="mods java">
   <!-- <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/config/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>-->
   <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>
@@ -331,7 +332,22 @@
         <xsl:value-of select="$node/@valueURI"/>
       </field>
     </xsl:if>
-
+    <xsl:if test="normalize-space($node/@xlink:href)">
+      <field>
+        <xsl:attribute name="name">
+          <xsl:value-of select="concat($prefix, 'xlinkhref_', $suffix)"/>
+        </xsl:attribute>
+        <xsl:value-of select="$node/@xlink:href"/>
+      </field>
+    </xsl:if>
+    <xsl:if test="normalize-space($node/@displayLabel)">
+      <field>
+        <xsl:attribute name="name">
+          <xsl:value-of select="concat($prefix, 'displayLabel_', $suffix)"/>
+        </xsl:attribute>
+        <xsl:value-of select="$node/@displayLabel"/>
+      </field>
+    </xsl:if>
     <xsl:apply-templates select="$node/*" mode="slurping_MODS">
       <xsl:with-param name="prefix" select="$prefix"/>
       <xsl:with-param name="suffix" select="$suffix"/>
