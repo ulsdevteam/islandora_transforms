@@ -8,14 +8,14 @@
         <xsl:for-each select="$content//cue">
                 <field>
                     <xsl:attribute name="name">
-                        <xsl:value-of select="concat($prefix, 'cue_id', '_mt')"/>  
+                        <xsl:value-of select="concat($prefix, 'cue_id')"/>  
                     </xsl:attribute>
                     <xsl:value-of select="position()"/>
                 </field>
                 <xsl:if test="$content//solespeaker">
                     <field>
                         <xsl:attribute name="name">
-                            <xsl:value-of select="concat($prefix, 'speaker', '_mt')"/>  
+                            <xsl:value-of select="concat($prefix, 'speaker')"/>  
                         </xsl:attribute>
                         <xsl:value-of select="$solespeaker"/>
                     </field>
@@ -30,7 +30,7 @@
         <xsl:for-each select=".">
             <field>
                 <xsl:attribute name="name">
-                    <xsl:value-of select="concat($prefix, local-name(), '_mt')"/>  
+                    <xsl:value-of select="concat($prefix, local-name())"/>  
                 </xsl:attribute>
                 <xsl:value-of select="."/>
             </field>
