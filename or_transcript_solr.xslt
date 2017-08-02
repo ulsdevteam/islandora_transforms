@@ -20,12 +20,12 @@
                         <xsl:value-of select="$solespeaker"/>
                     </field>
                 </xsl:if>
-                <xsl:apply-templates mode='slurping_transform'>
+                <xsl:apply-templates mode='slurping_oh_transform'>
                     <xsl:with-param name="prefix" select="$prefix"/>
                 </xsl:apply-templates>
             </xsl:for-each>
     </xsl:template>
-    <xsl:template match="//cue/*" mode='slurping_transform'>
+    <xsl:template match="//cue/*" mode='slurping_oh_transform'>
         <xsl:param name="prefix" />
         <xsl:for-each select=".">
             <field>
