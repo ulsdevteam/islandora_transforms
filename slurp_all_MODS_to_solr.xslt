@@ -11,6 +11,7 @@
   <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>
   <!-- <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/config/index/FgsIndex/islandora_transforms/manuscript_finding_aid.xslt"/> -->
   <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/manuscript_finding_aid.xslt"/>
+  <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/slurp_MODS_fields_with_ALL_suffix_to_solr.xslt"/>
 
   <!-- HashSet to track single-valued fields. -->
   <xsl:variable name="single_valued_hashset" select="java:java.util.HashSet.new()"/>
@@ -29,7 +30,7 @@
       <xsl:with-param name="pid" select="../../@PID"/>
       <xsl:with-param name="datastream" select="../@ID"/>
     </xsl:apply-templates>
-    <xsl:apply-templates mode="slurp_all" select="$content//mods:mods[1]"/>
+    <xsl:apply-templates mode="slurp_all_suffix" select="$content//mods:mods[1]"/>
   </xsl:template>
 
   <!-- Handle dates. -->
@@ -357,68 +358,6 @@
       <xsl:with-param name="datastream" select="$datastream"/>
     </xsl:apply-templates>
   </xsl:template>
-  <!-- fields suffixed with "all" -->
-  <xsl:template match="mods:mods/mods:titleInfo/mods:title" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'titleInfo_title_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="mods:mods/mods:subject//*" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'subject_descendants_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="mods:mods/mods:genre" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'genre_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="mods:mods/mods:name[@type or not(@type)][mods:role/mods:roleTerm[@authority= 'marcrelator' and @type = 'text']][. = 'contributor']/mods:namePart" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'contributor_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="mods:mods/mods:name[@type or not(@type)][mods:role/mods:roleTerm[@authority= 'marcrelator' and @type = 'text']][. = 'creator']/mods:namePart" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'creator_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="mods:mods/mods:name[mods:role/mods:roleTerm[@authority= 'marcrelator' and @type = 'text']][. = 'author']/mods:namePart" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'author_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="mods:mods/mods:physicalDescription/mods:form" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'form_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="mods:mods/mods:identifier" mode="slurp_all">
-    <xsl:call-template name="mods_all_fork">
-      <xsl:with-param name="field_name" select="'indentifier_all'"/>
-      <xsl:with-param name="content" select="normalize-space()"/>
-    </xsl:call-template>
-  </xsl:template>
 
-<!-- Writes a Solr field. -->
-  <xsl:template name="mods_all_fork">
-    <xsl:param name="field_name"/>
-    <xsl:param name="content"/>
-    <xsl:if test="not(normalize-space($content) = '')">
-      <field>
-        <xsl:attribute name="name">
-          <xsl:value-of select="concat('mods_', $field_name, '_ms')"/>
-        </xsl:attribute>
-        <xsl:value-of select="$content"/>
-      </field>
-    </xsl:if>
-  </xsl:template>
 
 </xsl:stylesheet>
