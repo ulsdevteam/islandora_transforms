@@ -358,6 +358,4 @@
       <xsl:with-param name="datastream" select="$datastream"/>
     </xsl:apply-templates>
   </xsl:template>
-
-
 </xsl:stylesheet>
