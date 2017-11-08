@@ -26,25 +26,25 @@
      </xsl:template>
      <xsl:template match="mods:mods/mods:name[mods:role/mods:roleTerm[@authority= 'marcrelator' and @type = 'text']][. = 'contributor']/mods:namePart" mode="slurp_all_suffix">
        <xsl:call-template name="mods_all_suffix">
-         <xsl:with-param name="field_name" select="'contributor_all'"/>
+         <xsl:with-param name="field_name" select="'name_contributor_namePart_all'"/>
          <xsl:with-param name="content" select="normalize-space()"/>
        </xsl:call-template>
      </xsl:template>
      <xsl:template match="mods:mods/mods:name[mods:role/mods:roleTerm[@authority= 'marcrelator' and @type = 'text']][. = 'creator']/mods:namePart" mode="slurp_all_suffix">
        <xsl:call-template name="mods_all_suffix">
-         <xsl:with-param name="field_name" select="'creator_all'"/>
+         <xsl:with-param name="field_name" select="'name_creator_namePart_all'"/>
          <xsl:with-param name="content" select="normalize-space()"/>
        </xsl:call-template>
      </xsl:template>
      <xsl:template match="mods:mods/mods:name[mods:role/mods:roleTerm[@authority= 'marcrelator' and @type = 'text']][. = 'author']/mods:namePart" mode="slurp_all_suffix">
        <xsl:call-template name="mods_all_suffix">
-         <xsl:with-param name="field_name" select="'author_all'"/>
+         <xsl:with-param name="field_name" select="'name_author_namePart_all'"/>
          <xsl:with-param name="content" select="normalize-space()"/>
        </xsl:call-template>
      </xsl:template>
      <xsl:template match="mods:mods/mods:physicalDescription/mods:form" mode="slurp_all_suffix">
        <xsl:call-template name="mods_all_suffix">
-         <xsl:with-param name="field_name" select="'form_all'"/>
+         <xsl:with-param name="field_name" select="'physicalDescription_form_all'"/>
          <xsl:with-param name="content" select="normalize-space()"/>
        </xsl:call-template>
      </xsl:template>
