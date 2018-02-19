@@ -5,14 +5,11 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:foxml="info:fedora/fedora-system:def/foxml#"
   xmlns:mods="http://www.loc.gov/mods/v3"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
      exclude-result-prefixes="mods java">
   <!-- <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/config/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>-->
   <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>
   <!-- <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/config/index/FgsIndex/islandora_transforms/manuscript_finding_aid.xslt"/> -->
   <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/manuscript_finding_aid.xslt"/>
-  <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/slurp_MODS_fields_with_ALL_suffix_to_solr.xslt"/>
-
   <!-- HashSet to track single-valued fields. -->
   <xsl:variable name="single_valued_hashset" select="java:java.util.HashSet.new()"/>
 
@@ -30,7 +27,6 @@
       <xsl:with-param name="pid" select="../../@PID"/>
       <xsl:with-param name="datastream" select="../@ID"/>
     </xsl:apply-templates>
-    <xsl:apply-templates mode="slurp_all_suffix" select="$content//mods:mods[1]"/>
   </xsl:template>
 
   <!-- Handle dates. -->
@@ -335,20 +331,20 @@
         <xsl:value-of select="$node/@valueURI"/>
       </field>
     </xsl:if>
-    <xsl:if test="normalize-space($node/@xlink:href)">
+    <xsl:if test="normalize-space($node/@copyright.status)">
       <field>
         <xsl:attribute name="name">
-          <xsl:value-of select="concat($prefix, 'xlinkhref_', $suffix)"/>
+          <xsl:value-of select="concat($prefix, 'copyright_status_', $suffix)"/>
         </xsl:attribute>
-        <xsl:value-of select="$node/@xlink:href"/>
+        <xsl:value-of select="$node/@copyright.status"/>
       </field>
     </xsl:if>
-    <xsl:if test="normalize-space($node/@displayLabel)">
+    <xsl:if test="normalize-space($node/@publication.status)">
       <field>
         <xsl:attribute name="name">
-          <xsl:value-of select="concat($prefix, 'displayLabel_', $suffix)"/>
+          <xsl:value-of select="concat($prefix, 'publication_status_', $suffix)"/>
         </xsl:attribute>
-        <xsl:value-of select="$node/@displayLabel"/>
+        <xsl:value-of select="$node/@publication.status"/>
       </field>
     </xsl:if>
     <xsl:apply-templates select="$node/*" mode="slurping_MODS">
