@@ -35,7 +35,7 @@
         <xsl:with-param name="value" select="@rdf:resource"/>
       </xsl:call-template>
     </xsl:template>
-    <xsl:template match="*[normalize-space(.)]" mode="rels_ext_element">
+    <xsl:template match="*[normalize-space(.) and not(contains(local-name(.), 'isSequenceNumberOf'))]" mode="rels_ext_element">
       <xsl:param name="prefix"/>
       <xsl:param name="suffix"/>
 
@@ -95,7 +95,7 @@
                 <xsl:attribute name="name">
                   <xsl:value-of select="concat($prefix, local-name(), '_', $type, '_l')"/>
                 </xsl:attribute>
-                <xsl:value-of select="$value"/>
+               <xsl:value-of select="$value"/>
               </field>
             </xsl:when>
             <xsl:when test="floor($value) = $value">
