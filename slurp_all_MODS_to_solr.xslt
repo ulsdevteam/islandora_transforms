@@ -149,6 +149,7 @@
     </xsl:call-template>
   </xsl:template>
 
+  <!-- BGG will want to adjust this -->
   <!-- Intercept names with role terms, so we can create copies of the fields
     including the role term in the name of generated fields. (Hurray, additional
     specificity!) -->
